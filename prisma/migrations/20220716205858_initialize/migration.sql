@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "API_Log" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" DATETIME NOT NULL,
+    "ip" TEXT NOT NULL,
+    "method" TEXT NOT NULL,
+    "path" TEXT NOT NULL
+);
