@@ -117,7 +117,7 @@ dist
 .dynamodb/
 
 # dev db
-prisma/dev.db
+./prisma/dev.db
 
 # TernJS port file
 .tern-port
