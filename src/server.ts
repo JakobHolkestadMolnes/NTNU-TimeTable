@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import Logging from './library/Logging';
 import config from './config/config';
-import commentRoutes from './routes/comments';
+import lectureRoutes from './routes/lecture';
 import {prisma} from './config/client';
 
 import swaggerJSDoc from 'swagger-jsdoc';
@@ -33,18 +33,7 @@ const router = express();
 router.use(async (req, res, next) => {
     /** Log the request */
     Logging.info(`Incoming -> Method: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
-    prisma.aPI_Log
-        .create({
-            data: {
-                method: req.method,
-                path: req.url,
-                ip: req.socket.remoteAddress || ''
-            }
-        })
-        .then(() => {})
-        .catch((err) => {
-            Logging.error(err);
-        });
+    
     res.on('finish', () => {
         Logging.info(`Outgoing -> Method: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}] - Status: [${res.statusCode}]`);
     });
@@ -67,16 +56,13 @@ router.use((req, res, next) => {
 });
 
 /** Routes */
-router.use('/comments', commentRoutes);
+router.use('/api/v1/lectures', lectureRoutes);
 
 /** Healthcheck */
 router.get('/ping', (req, res) => {
     res.status(200).json({ message: 'pong' });
 });
-router.get('/logs', async (req, res) => {
-    const logs = await prisma.aPI_Log.findMany();
-    res.status(200).json(logs);
-});
+
 router.get('/', (req, res) => {
     res.sendFile(__dirname + '/pages/index.html');
 });

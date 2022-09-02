@@ -1,0 +1,22 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Courses {
+  id Int [pk, increment]
+  CourseCode String [unique, not null]
+  CourseName String [not null]
+  Activities Activities [not null]
+}
+
+Table Activities {
+  id Int [pk, increment]
+  Course Courses [not null]
+  CourseCode String [not null]
+  StartDate DateTime [not null]
+  EndDate DateTime [not null]
+  Activity String [not null]
+  Room String [not null]
+}
+
+Ref: Activities.CourseCode > Courses.CourseCode

@@ -6,25 +6,28 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model API_Log {
-  id          Int      @id @default(autoincrement())
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-
-  ip          String   
-  method      String
-  path        String
+generator dbml {
+  provider = "prisma-dbml-generator"
 }
 
+model Courses {
+  id         Int    @id @default(autoincrement())
+  CourseCode String @unique
+  CourseName String
 
-model Comments {
-  id          Int      @id @default(autoincrement())
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  ip          String
-  content     String
+  Activities Activities[]
+}
+
+model Activities {
+  id         Int      @id @default(autoincrement())
+  Course     Courses  @relation(fields: [CourseCode], references: [CourseCode])
+  CourseCode String
+  StartDate  DateTime
+  EndDate    DateTime
+  Activity   String
+  Room       String
 }

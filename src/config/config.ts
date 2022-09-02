@@ -15,5 +15,5 @@ const config = {
 
 export default {
 
-    config 
+    config
 };
